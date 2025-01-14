@@ -4,6 +4,7 @@ import { readFileSync } from 'fs';
 import ssh2, { ServerChannel, type ServerConnectionListener } from 'ssh2';
 import { setStreamConfig } from '../utils/ssh';
 import { renderBlessedApp } from '../game';
+import { joinGameRoom, createGameRoom } from '../game/engine/room-manager';
 
 const Server = ssh2.Server;
 
@@ -58,9 +59,13 @@ const listener: ServerConnectionListener = (client) => {
               }),
             });
 
-            renderBlessedApp(screen, () => {
-              screen.destroy();
-              stream.end();
+            renderBlessedApp(screen, {
+              onQuit: () => {
+                screen.destroy();
+                stream.end();
+              },
+              createGameRoom,
+              joinGameRoom,
             });
             screen.render();
             screen.program.emit('resize');

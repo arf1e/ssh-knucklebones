@@ -1,21 +1,19 @@
+import React from 'react';
 import { Widgets } from 'blessed';
 import { DetailedBlessedProps } from 'react-blessed';
 import { Box } from './Box';
 import { Die, DIE_HEIGHT, DIE_WIDTH, DiePlaceholder } from './Die';
 import { useEffect, useMemo, useState } from 'react';
 import chalk from 'chalk';
+import { DiceColumnState, MaybeDie } from '../game/engine';
 
 export const DICE_COLUMN_WIDTH = DIE_WIDTH + 2;
-
-// TODO: Remove this when I'll have all the engine stuff
-type MaybeDie = number | null;
-
-type DiceColumnState = [MaybeDie, MaybeDie, MaybeDie];
 
 type DiceColumnProps = {
   column: DiceColumnState;
   reverse?: boolean;
   hover?: boolean;
+  color: 'red' | 'blue';
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 const ComboAwareDie: React.FC<{
@@ -44,7 +42,15 @@ const ComboAwareDie: React.FC<{
 
 const hoverPointerFrames = ['-', '\\', '|', '/'];
 
-const HoverPointer: React.FC<{ top: number }> = ({ top }) => {
+const colorWrapperMapper = {
+  red: chalk.bgRed,
+  blue: chalk.bgBlue,
+};
+
+const HoverPointer: React.FC<{ top: number; color: 'red' | 'blue' }> = ({
+  top,
+  color,
+}) => {
   const [frame, setFrame] = useState(0);
 
   useEffect(() => {
@@ -62,6 +68,7 @@ const HoverPointer: React.FC<{ top: number }> = ({ top }) => {
   }, [frame]);
 
   const ch = useMemo(() => hoverPointerFrames[frame], [frame]);
+  const colorWrapper = useMemo(() => colorWrapperMapper[color], [color]);
 
   return (
     <>
@@ -70,7 +77,7 @@ const HoverPointer: React.FC<{ top: number }> = ({ top }) => {
         height={1}
         left={0}
         width={DIE_WIDTH}
-        ch={chalk.bgRed(chalk.white(chalk.bold(ch)))}
+        content={colorWrapper(' ', chalk.white(ch), ' ')}
       />
     </>
   );
@@ -78,6 +85,7 @@ const HoverPointer: React.FC<{ top: number }> = ({ top }) => {
 
 export const DiceColumn: React.FC<DiceColumnProps> = ({
   column,
+  color,
   reverse = false,
   hover = false,
   ...boxProps
@@ -94,7 +102,7 @@ export const DiceColumn: React.FC<DiceColumnProps> = ({
       ))}
       {hover && (
         <>
-          <HoverPointer top={DIE_HEIGHT * 3} />
+          <HoverPointer top={DIE_HEIGHT * 3} color={color} />
         </>
       )}
     </Box>
