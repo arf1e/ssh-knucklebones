@@ -15,6 +15,8 @@ import {
   TEST_GAME_ROOM_NAME,
 } from '../engine/room-manager';
 import { PlayerStatus } from '../../components/PlayerStatus';
+import chalk from 'chalk';
+import { Txt } from '../../components/Txt';
 
 const CURRENT_PLAYER_TURN = 'your turn!';
 const OPPONENT_TURN = "opponent's turn";
@@ -56,12 +58,12 @@ const Field: React.FC<{
         onSelectColumn={(columnIndex) => makeMove(PLAYER_ONE, columnIndex)}
       />
       <Box
-        width="40%"
+        width="60%"
         height={1}
         left="center"
         top="50%"
         align="center"
-        ch="~"
+        ch="·"
       />
       {readableState && (
         <Box
@@ -123,15 +125,34 @@ export const GameRoom: React.FC<GameRoomProps> = () => {
   if (!game.state) return null;
   if (!player) return null;
   if (!state) return null;
+  const helperText = chalk.white(
+    chalk.bold('controls:'),
+    chalk.inverse(' ← → '),
+    'or',
+    chalk.inverse(' h l '),
+    'to move;',
+    chalk.inverse(' ⏎ '),
+    'to place piece;',
+    chalk.inverse(' Esc '),
+    'to ragequit'
+  );
 
   return (
     <Box>
-      <Field
-        key={`${game.die}-${frame}`}
-        frame={frame}
-        game={game}
-        player={player}
-      />
+      <Box top={0} left={undefined} right={0} width="100%" height={1}>
+        <Txt top={0} width="100%" align="center">
+          {helperText}
+        </Txt>
+      </Box>
+      <Box top={1} left={0} width="100%" height={1} ch="–" />
+      <Box top={2}>
+        <Field
+          key={`${game.die}-${frame}`}
+          frame={frame}
+          game={game}
+          player={player}
+        />
+      </Box>
     </Box>
   );
 };

@@ -50,21 +50,19 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = ({
           align="center"
           content={chalk.bold(
             '~',
-            ' ',
             playerName,
-            isCurrentPlayer ? colorWrapper[player]('(you)') : '',
-            ' ',
+            ...(isCurrentPlayer ? [colorWrapper[player]('(you)')] : []),
             '~'
           )}
         />
       </Box>
-      <Box width="100%" top="50%">
+      <Box width="100%" top="50%-3">
         <Box
           width="100%"
-          top={0}
+          top={1}
           align="center"
           content={
-            gameState === player ? 'Die to place:' : 'Die will appear here'
+            gameState === player ? 'Piece to place:' : 'Piece will appear here'
           }
         />
         {gameState === player && (
