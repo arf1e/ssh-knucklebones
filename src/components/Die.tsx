@@ -1,3 +1,4 @@
+import React from 'react';
 import { Widgets } from 'blessed';
 import chalk from 'chalk';
 import { DetailedBlessedProps } from 'react-blessed';
@@ -18,6 +19,7 @@ const getChalkWrapper = (color: DieColor) => {
     white: chalk.white,
     yellow: chalk.yellow,
     blue: chalk.cyan,
+    red: chalk.red,
   }[color];
 };
 
@@ -35,7 +37,7 @@ export const Die: React.FC<DieProps> = ({
       border={{ type: 'line', fg: 1, bg: 0 }}
       style={{ border: { fg: color } }}
       align="center"
-      content={chalkWrapper(chalk.bold(value.toString()))}
+      content={chalkWrapper(value.toString())}
     />
   );
 };
@@ -44,7 +46,7 @@ export const DiePlaceholder: React.FC<
   DetailedBlessedProps<Widgets.BoxElement>
 > = ({ ...boxProps }) => {
   return (
-    <box
+    <Box
       height={DIE_HEIGHT}
       width={DIE_WIDTH}
       border={{ type: 'line', fg: 0, bg: 0 }}

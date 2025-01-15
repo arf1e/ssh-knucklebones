@@ -72,6 +72,13 @@ export class Knucklebones {
   scores: Scores = composeInitialScores();
   grid: GameGrid = composeInitialGrid();
   listeners: Listener[] = [];
+  hoveredColumns: {
+    [PLAYER_ONE]: number;
+    [PLAYER_TWO]: number;
+  } = {
+    [PLAYER_ONE]: 0,
+    [PLAYER_TWO]: 0,
+  };
 
   constructor(params?: { dieValue?: number; isServerSide?: boolean }) {
     if (params?.dieValue) {
@@ -86,6 +93,11 @@ export class Knucklebones {
 
   notifyListeners() {
     this.listeners.forEach((listener) => listener(this));
+  }
+
+  focusColumn(player: PlayerIdentifier, columnIndex: number) {
+    this.hoveredColumns[player] = columnIndex;
+    this.notifyListeners();
   }
 
   _isColumnFull(columnIndex: number, player: PlayerIdentifier) {

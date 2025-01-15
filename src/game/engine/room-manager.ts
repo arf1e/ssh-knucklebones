@@ -1,10 +1,4 @@
-import {
-  Knucklebones,
-  Listener,
-  PLAYER_ONE,
-  PLAYER_TWO,
-  PlayerIdentifier,
-} from '.';
+import { Knucklebones, PLAYER_ONE, PLAYER_TWO, PlayerIdentifier } from '.';
 
 export const rooms: Record<
   string,
