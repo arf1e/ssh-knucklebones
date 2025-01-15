@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Box } from '../../components/Box';
 import { DiceGrid } from '../../components/DiceGrid';
 import {
@@ -9,21 +9,45 @@ import {
   PLAYER_TWO,
   PlayerIdentifier,
 } from '../engine';
-import { join } from 'lodash';
 import {
   JoinGameRoom,
   joinGameRoom,
   TEST_GAME_ROOM_NAME,
 } from '../engine/room-manager';
+import { PlayerStatus } from '../../components/PlayerStatus';
+
+const CURRENT_PLAYER_TURN = 'your turn!';
+const OPPONENT_TURN = "opponent's turn";
+const GAME_OVER = 'game over';
 
 const Field: React.FC<{
   game: Knucklebones;
   frame: number;
   player: PlayerIdentifier;
-}> = ({ game, frame, player }) => {
+}> = ({ game, player }) => {
   const { die, state, grid, makeMove } = game;
+  const readableState = useMemo(() => {
+    if ([GAME_STATE_P1_TURN, GAME_STATE_P2_TURN].includes(state)) {
+      const baseText = state === player ? CURRENT_PLAYER_TURN : OPPONENT_TURN;
+      return ` ${baseText} `;
+    }
+    return ` ${GAME_OVER} `;
+  }, [state]);
+
   return (
     <Box width="100%" height="100%">
+      <Box width="100%" height="50%" top={0}>
+        <PlayerStatus
+          player={PLAYER_ONE}
+          isCurrentPlayer={player === PLAYER_ONE}
+          gameState={state}
+          die={die}
+          top={0}
+          left={0}
+          width="25%"
+          playerName="player one"
+        />
+      </Box>
       <DiceGrid
         top="15%"
         left="center"
@@ -31,14 +55,23 @@ const Field: React.FC<{
         columns={grid[PLAYER_ONE]}
         onSelectColumn={(columnIndex) => makeMove(PLAYER_ONE, columnIndex)}
       />
-      <Box width="100%" height={1} left={0} top="50%" align="center" ch="-" />
       <Box
+        width="40%"
         height={1}
-        left="0"
+        left="center"
         top="50%"
         align="center"
-        content={`Current die value: ${die}. You are ${player}. Frame: ${frame}`}
+        ch="~"
       />
+      {readableState && (
+        <Box
+          top="50%"
+          height={1}
+          left={`50%-${Math.floor(readableState.length / 2)}`}
+          width={readableState.length}
+          content={readableState}
+        />
+      )}
       <Box width="100%" height="50%-1" top="50%+1" left="0">
         <DiceGrid
           top="center"
@@ -47,6 +80,16 @@ const Field: React.FC<{
           columns={grid[PLAYER_TWO]}
           controllable={state === GAME_STATE_P2_TURN && player === PLAYER_TWO}
           onSelectColumn={(columnIndex) => makeMove(PLAYER_TWO, columnIndex)}
+        />
+        <PlayerStatus
+          player={PLAYER_TWO}
+          isCurrentPlayer={player === PLAYER_TWO}
+          gameState={state}
+          die={die}
+          top={0}
+          right={0}
+          width="25%"
+          playerName="player two"
         />
       </Box>
     </Box>

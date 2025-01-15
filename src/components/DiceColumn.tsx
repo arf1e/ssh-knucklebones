@@ -6,6 +6,7 @@ import { Die, DIE_HEIGHT, DIE_WIDTH, DiePlaceholder } from './Die';
 import { useEffect, useMemo, useState } from 'react';
 import chalk from 'chalk';
 import { DiceColumnState, MaybeDie } from '../game/engine';
+import { colors } from '../utils/colors';
 
 export const DICE_COLUMN_WIDTH = DIE_WIDTH + 2;
 
@@ -42,11 +43,6 @@ const ComboAwareDie: React.FC<{
 
 const hoverPointerFrames = ['-', '\\', '|', '/'];
 
-const colorWrapperMapper = {
-  red: chalk.bgRed,
-  blue: chalk.bgBlue,
-};
-
 const HoverPointer: React.FC<{ top: number; color: 'red' | 'blue' }> = ({
   top,
   color,
@@ -68,7 +64,7 @@ const HoverPointer: React.FC<{ top: number; color: 'red' | 'blue' }> = ({
   }, [frame]);
 
   const ch = useMemo(() => hoverPointerFrames[frame], [frame]);
-  const colorWrapper = useMemo(() => colorWrapperMapper[color], [color]);
+  const colorWrapper = useMemo(() => colors[color].text.bg, [color]);
 
   return (
     <>

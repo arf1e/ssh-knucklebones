@@ -1,3 +1,4 @@
+import React from 'react';
 import { BlessedIntrinsicElements } from 'react-blessed';
 
 type TxtProps = {
@@ -11,6 +12,6 @@ type TxtProps = {
 } & BlessedIntrinsicElements['element'];
 
 export const Txt: React.FC<TxtProps> = ({ children, ...textProps }) => {
-  // @ts-ignore
+  // @ts-expect-error react-blessed types are wrong
   return <text {...textProps}>{children}</text>;
 };
