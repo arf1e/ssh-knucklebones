@@ -1,5 +1,5 @@
 import findLastIndex from 'lodash/findLastIndex';
-import sum from 'lodash/sum';
+import { calculateColumnScore } from './score-counter';
 
 export const COLUMN_SIZE = 3;
 
@@ -130,12 +130,11 @@ export class Knucklebones {
   }
 
   _updateScores() {
-    // TODO: implement combos and stuff
     const players: PlayerIdentifier[] = [PLAYER_ONE, PLAYER_TWO];
     for (const player of players) {
       const board = this.grid[player as PlayerIdentifier];
       board.forEach((column, columnIndex) => {
-        this.scores[player][columnIndex] = sum(column);
+        this.scores[player][columnIndex] = calculateColumnScore(column);
       });
     }
   }
