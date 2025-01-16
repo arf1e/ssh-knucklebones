@@ -11,6 +11,7 @@ import { DetailedBlessedProps } from 'react-blessed';
 import { Widgets } from 'blessed';
 import chalk from 'chalk';
 import { Die, DIE_HEIGHT, DIE_WIDTH } from './Die';
+import { Txt } from './Txt';
 
 type PlayerStatusProps = {
   player: PlayerIdentifier;
@@ -18,6 +19,7 @@ type PlayerStatusProps = {
   gameState: GameState;
   die: Knucklebones['die'];
   playerName?: string;
+  totalScore: number;
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 const colorWrapper = {
@@ -31,6 +33,7 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = ({
   gameState,
   die,
   playerName = player,
+  totalScore,
   ...boxProps
 }) => {
   const coordinates = useMemo(() => {
@@ -56,7 +59,13 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = ({
           )}
         />
       </Box>
-      <Box width="100%" top="50%-3">
+      <Box
+        width="100%"
+        top="50%-2"
+        align="center"
+        content={chalk.bold(totalScore)}
+      />
+      <Box width="100%" top="50%-1">
         <Box
           width="100%"
           top={1}

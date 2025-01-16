@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import sum from 'lodash/sum';
 import { Box } from '../../components/Box';
 import { DiceGrid } from '../../components/DiceGrid';
 import {
@@ -46,6 +47,7 @@ const Field: React.FC<{
     <Box width="100%" height="100%">
       <Box width="100%" height="50%" top={0}>
         <PlayerStatus
+          totalScore={sum(scores[PLAYER_ONE])}
           player={PLAYER_ONE}
           isCurrentPlayer={player === PLAYER_ONE}
           gameState={state}
@@ -97,6 +99,7 @@ const Field: React.FC<{
           hoveredIndex={hoveredColumns[PLAYER_TWO]}
         />
         <PlayerStatus
+          totalScore={sum(scores[PLAYER_TWO])}
           player={PLAYER_TWO}
           isCurrentPlayer={player === PLAYER_TWO}
           gameState={state}
