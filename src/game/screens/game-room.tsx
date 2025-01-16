@@ -29,7 +29,7 @@ const Field: React.FC<{
   hoveredP1Column: number | null;
   hoveredP2Column: number | null;
 }> = ({ game, player }) => {
-  const { die, state, grid, makeMove, hoveredColumns } = game;
+  const { die, state, grid, makeMove, hoveredColumns, scores } = game;
   const readableState = useMemo(() => {
     if ([GAME_STATE_P1_TURN, GAME_STATE_P2_TURN].includes(state)) {
       const baseText = state === player ? CURRENT_PLAYER_TURN : OPPONENT_TURN;
@@ -62,6 +62,7 @@ const Field: React.FC<{
         controllable={player === PLAYER_ONE}
         color={player === PLAYER_ONE ? 'red' : 'white'}
         columns={grid[PLAYER_ONE]}
+        scores={scores[PLAYER_ONE]}
         onSelectColumn={(columnIndex) => makeMove(PLAYER_ONE, columnIndex)}
         {...(player === PLAYER_ONE && { onMovePointer })}
         hoveredIndex={hoveredColumns[PLAYER_ONE]}
@@ -72,7 +73,7 @@ const Field: React.FC<{
         left="center"
         top="50%"
         align="center"
-        ch="·"
+        ch="–"
       />
       {readableState && (
         <Box
@@ -90,6 +91,7 @@ const Field: React.FC<{
           color={player === PLAYER_TWO ? 'blue' : 'white'}
           columns={grid[PLAYER_TWO]}
           controllable={player === PLAYER_TWO}
+          scores={scores[PLAYER_TWO]}
           onSelectColumn={(columnIndex) => makeMove(PLAYER_TWO, columnIndex)}
           {...(player === PLAYER_TWO && { onMovePointer })}
           hoveredIndex={hoveredColumns[PLAYER_TWO]}

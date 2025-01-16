@@ -3,7 +3,7 @@ import { Widgets } from 'blessed';
 import { DetailedBlessedProps } from 'react-blessed';
 import { Box } from './Box';
 import { Die, DIE_HEIGHT, DIE_WIDTH, DiePlaceholder } from './Die';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import chalk from 'chalk';
 import { DiceColumnState, MaybeDie } from '../game/engine';
 import { colors } from '../utils/colors';
@@ -16,6 +16,7 @@ type DiceColumnProps = {
   reverse?: boolean;
   hover?: boolean;
   color: 'red' | 'blue' | 'white';
+  score: number;
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 const ComboAwareDie: React.FC<{
@@ -67,6 +68,7 @@ export const DiceColumn: React.FC<DiceColumnProps> = ({
   column,
   color,
   hover = false,
+  score,
   ...boxProps
 }) => {
   return (
@@ -79,6 +81,14 @@ export const DiceColumn: React.FC<DiceColumnProps> = ({
           column={column}
         />
       ))}
+      <Box top={DIE_HEIGHT * 3 + 2} width={DIE_WIDTH} height={1} ch="·" />
+      <Box
+        top={DIE_HEIGHT * 3 + 3}
+        width={DIE_WIDTH}
+        height={1}
+        align="center"
+        content={score.toString()}
+      />
       {hover && (
         <>
           <HoverPointer top={DIE_HEIGHT * 3} color={color} />

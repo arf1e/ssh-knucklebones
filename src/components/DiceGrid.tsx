@@ -13,6 +13,7 @@ type DiceGridProps = {
   color?: 'red' | 'blue' | 'white';
   hoveredIndex: number;
   onMovePointer?: (columnIndex: number) => void;
+  scores: number[];
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 export const DiceGrid: React.FC<DiceGridProps> = ({
@@ -22,6 +23,7 @@ export const DiceGrid: React.FC<DiceGridProps> = ({
   color = 'red',
   hoveredIndex,
   onMovePointer,
+  scores = [0, 0, 0],
   ...boxProps
 }) => {
   const handleKeyPress = (ch: string, full: string) => {
@@ -63,6 +65,7 @@ export const DiceGrid: React.FC<DiceGridProps> = ({
           column={column}
           color={color}
           hover={index === hoveredIndex}
+          score={scores[index]}
         />
       ))}
     </Box>
