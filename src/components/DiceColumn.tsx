@@ -7,6 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import chalk from 'chalk';
 import { DiceColumnState, MaybeDie } from '../game/engine';
 import { colors } from '../utils/colors';
+import { useAnimatedSymbol } from '../hooks/useAnimatedSymbol';
 
 export const DICE_COLUMN_WIDTH = DIE_WIDTH + 2;
 
@@ -14,7 +15,7 @@ type DiceColumnProps = {
   column: DiceColumnState;
   reverse?: boolean;
   hover?: boolean;
-  color: 'red' | 'blue';
+  color: 'red' | 'blue' | 'white';
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 const ComboAwareDie: React.FC<{
@@ -41,29 +42,12 @@ const ComboAwareDie: React.FC<{
   );
 };
 
-const hoverPointerFrames = ['-', '\\', '|', '/'];
+const HoverPointer: React.FC<{
+  top: number;
+  color: 'red' | 'blue' | 'white';
+}> = ({ top, color }) => {
+  const ch = useAnimatedSymbol('line');
 
-const HoverPointer: React.FC<{ top: number; color: 'red' | 'blue' }> = ({
-  top,
-  color,
-}) => {
-  const [frame, setFrame] = useState(0);
-
-  useEffect(() => {
-    const getNextFrame = () => {
-      const nextFrame =
-        frame + 1 > hoverPointerFrames.length - 1 ? 0 : frame + 1;
-      setFrame(nextFrame);
-    };
-
-    const interval = setInterval(() => {
-      getNextFrame();
-    }, 120);
-
-    return () => clearInterval(interval);
-  }, [frame]);
-
-  const ch = useMemo(() => hoverPointerFrames[frame], [frame]);
   const colorWrapper = useMemo(() => colors[color].text.bg, [color]);
 
   return (
@@ -82,7 +66,6 @@ const HoverPointer: React.FC<{ top: number; color: 'red' | 'blue' }> = ({
 export const DiceColumn: React.FC<DiceColumnProps> = ({
   column,
   color,
-  reverse = false,
   hover = false,
   ...boxProps
 }) => {

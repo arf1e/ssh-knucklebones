@@ -3,14 +3,16 @@ import { DetailedBlessedProps } from 'react-blessed';
 import { DICE_COLUMN_WIDTH, DiceColumn } from './DiceColumn';
 import { Widgets } from 'blessed';
 import { Box } from './Box';
-import { useState } from 'react';
 import { GameBoard } from '../game/engine';
+import { controls } from '../constants/controls';
 
 type DiceGridProps = {
   columns: GameBoard;
   controllable?: boolean;
   onSelectColumn?: (columnIndex: number) => void;
-  color?: 'red' | 'blue';
+  color?: 'red' | 'blue' | 'white';
+  hoveredIndex: number;
+  onMovePointer?: (columnIndex: number) => void;
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 export const DiceGrid: React.FC<DiceGridProps> = ({
@@ -18,31 +20,29 @@ export const DiceGrid: React.FC<DiceGridProps> = ({
   controllable = false,
   onSelectColumn,
   color = 'red',
+  hoveredIndex,
+  onMovePointer,
   ...boxProps
 }) => {
-  const [focusedColumn, setFocusedColumn] = useState<number>(0);
-
   const handleKeyPress = (ch: string, full: string) => {
-    if (full === 'left' || ch === 'h') {
-      if (focusedColumn > 0) {
-        setFocusedColumn(focusedColumn - 1);
+    if (full === controls.standard.left || ch === controls.vim.left) {
+      if (hoveredIndex > 0) {
+        onMovePointer?.(hoveredIndex - 1);
         return;
       }
-
-      setFocusedColumn(columns.length - 1);
+      onMovePointer?.(columns.length - 1);
     }
 
-    if (full === 'right' || ch === 'l') {
-      if (focusedColumn < columns.length - 1) {
-        setFocusedColumn(focusedColumn + 1);
+    if (full === controls.standard.right || ch === controls.vim.right) {
+      if (hoveredIndex < columns.length - 1) {
+        onMovePointer?.(hoveredIndex + 1);
         return;
       }
-
-      setFocusedColumn(0);
+      onMovePointer?.(0);
     }
 
     if (full === 'return') {
-      onSelectColumn?.(focusedColumn);
+      onSelectColumn?.(hoveredIndex);
     }
   };
 
@@ -62,7 +62,7 @@ export const DiceGrid: React.FC<DiceGridProps> = ({
           key={index}
           column={column}
           color={color}
-          hover={controllable && index === focusedColumn}
+          hover={index === hoveredIndex}
         />
       ))}
     </Box>

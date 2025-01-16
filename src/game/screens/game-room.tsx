@@ -26,8 +26,10 @@ const Field: React.FC<{
   game: Knucklebones;
   frame: number;
   player: PlayerIdentifier;
+  hoveredP1Column: number | null;
+  hoveredP2Column: number | null;
 }> = ({ game, player }) => {
-  const { die, state, grid, makeMove } = game;
+  const { die, state, grid, makeMove, hoveredColumns } = game;
   const readableState = useMemo(() => {
     if ([GAME_STATE_P1_TURN, GAME_STATE_P2_TURN].includes(state)) {
       const baseText = state === player ? CURRENT_PLAYER_TURN : OPPONENT_TURN;
@@ -35,6 +37,10 @@ const Field: React.FC<{
     }
     return ` ${GAME_OVER} `;
   }, [state]);
+
+  const onMovePointer = (columnIndex: number) => {
+    game.focusColumn(player, columnIndex);
+  };
 
   return (
     <Box width="100%" height="100%">
@@ -53,9 +59,12 @@ const Field: React.FC<{
       <DiceGrid
         top="15%"
         left="center"
-        controllable={state === GAME_STATE_P1_TURN && player === PLAYER_ONE}
+        controllable={player === PLAYER_ONE}
+        color={player === PLAYER_ONE ? 'red' : 'white'}
         columns={grid[PLAYER_ONE]}
         onSelectColumn={(columnIndex) => makeMove(PLAYER_ONE, columnIndex)}
+        {...(player === PLAYER_ONE && { onMovePointer })}
+        hoveredIndex={hoveredColumns[PLAYER_ONE]}
       />
       <Box
         width="60%"
@@ -78,10 +87,12 @@ const Field: React.FC<{
         <DiceGrid
           top="center"
           left="center"
-          color="blue"
+          color={player === PLAYER_TWO ? 'blue' : 'white'}
           columns={grid[PLAYER_TWO]}
-          controllable={state === GAME_STATE_P2_TURN && player === PLAYER_TWO}
+          controllable={player === PLAYER_TWO}
           onSelectColumn={(columnIndex) => makeMove(PLAYER_TWO, columnIndex)}
+          {...(player === PLAYER_TWO && { onMovePointer })}
+          hoveredIndex={hoveredColumns[PLAYER_TWO]}
         />
         <PlayerStatus
           player={PLAYER_TWO}
@@ -107,10 +118,14 @@ export const GameRoom: React.FC<GameRoomProps> = () => {
   const [game, setGame] = useState<Knucklebones | null>(null);
   const [state, setState] = useState<Knucklebones['state'] | null>(null);
   const [player, setPlayer] = useState<PlayerIdentifier | null>(null);
+  const [hoveredP1Column, setHoveredP1Column] = useState<number>(0);
+  const [hoveredP2Column, setHoveredP2Column] = useState<number>(0);
 
   const syncGameState = (game: Knucklebones) => {
     setGame(game);
     setState(game.state);
+    setHoveredP1Column(game.hoveredColumns[PLAYER_ONE]);
+    setHoveredP2Column(game.hoveredColumns[PLAYER_TWO]);
     setFrame(game.turn);
   };
 
@@ -151,6 +166,8 @@ export const GameRoom: React.FC<GameRoomProps> = () => {
           frame={frame}
           game={game}
           player={player}
+          hoveredP2Column={hoveredP2Column}
+          hoveredP1Column={hoveredP1Column}
         />
       </Box>
     </Box>
