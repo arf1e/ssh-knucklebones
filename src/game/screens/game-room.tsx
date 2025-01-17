@@ -49,6 +49,7 @@ const Field: React.FC<{
           player={PLAYER_ONE}
           isCurrentPlayer={player === PLAYER_ONE}
           gameState={state}
+          winner={game.winner}
           die={die}
           top={0}
           left={0}
@@ -104,6 +105,7 @@ const Field: React.FC<{
           gameState={state}
           die={die}
           top={0}
+          winner={game.winner}
           right={0}
           width="25%"
           playerName="player two"
@@ -173,9 +175,9 @@ export const GameRoom: React.FC = () => {
           content={
             params.roomName
               ? chalk.white(
-                  chalk.bold('room number:'),
-                  chalk.inverse(` ${params.roomName as string} `)
-                )
+                chalk.bold('room number:'),
+                chalk.inverse(` ${params.roomName as string} `)
+              )
               : ''
           }
         />

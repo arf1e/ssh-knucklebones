@@ -1,5 +1,6 @@
 import findLastIndex from 'lodash/findLastIndex';
 import { calculateColumnScore } from './score-counter';
+import sum from 'lodash/sum';
 
 export const COLUMN_SIZE = 3;
 
@@ -72,6 +73,7 @@ export class Knucklebones {
   scores: Scores = composeInitialScores();
   grid: GameGrid = composeInitialGrid();
   listeners: Listener[] = [];
+  winner: PlayerIdentifier | null = null;
   hoveredColumns: {
     [PLAYER_ONE]: number;
     [PLAYER_TWO]: number;
@@ -146,7 +148,24 @@ export class Knucklebones {
       const playerHasNoFreeCells =
         this.grid[player].flat().filter((die) => die === null).length === 0;
 
-      if (playerHasNoFreeCells) return true;
+      if (playerHasNoFreeCells) {
+        const playerOneTotalScore = sum(this.scores[PLAYER_ONE]);
+        const playerTwoTotalScore = sum(this.scores[PLAYER_TWO]);
+
+        if (playerOneTotalScore > playerTwoTotalScore) {
+          this.winner = PLAYER_ONE;
+        }
+
+        if (playerOneTotalScore < playerTwoTotalScore) {
+          this.winner = PLAYER_TWO;
+        }
+
+        if (playerOneTotalScore === playerTwoTotalScore) {
+          this.winner = null;
+        }
+
+        return true;
+      }
     }
 
     return false;

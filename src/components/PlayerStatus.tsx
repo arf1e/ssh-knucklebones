@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import {
+  GAME_STATE_END,
   GameState,
   Knucklebones,
   PLAYER_ONE,
@@ -18,6 +19,7 @@ type PlayerStatusProps = {
   die: Knucklebones['die'];
   playerName?: string;
   totalScore: number;
+  winner?: Knucklebones['winner'];
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 export const PlayerStatus: React.FC<PlayerStatusProps> = ({
@@ -27,6 +29,7 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = ({
   die,
   playerName = player,
   totalScore,
+  winner,
   ...boxProps
 }) => {
   const coordinates = useMemo(() => {
@@ -36,6 +39,19 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = ({
 
     return { right: 0, bottom: 0 };
   }, []);
+
+  const showResult = gameState === GAME_STATE_END && isCurrentPlayer;
+  const resultText = useMemo(() => {
+    if (winner === player) {
+      return chalk.bold(chalk.bgRed('you win!'));
+    }
+
+    if (!winner) {
+      return chalk.bold('draw');
+    }
+
+    return chalk.bold(chalk.bgBlue('you lose!'));
+  }, [winner]);
 
   return (
     <Box {...boxProps} {...coordinates}>
@@ -58,27 +74,36 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = ({
         align="center"
         content={chalk.bold(totalScore)}
       />
-      <Box width="100%" top="50%-1">
-        <Box
-          width="100%"
-          top={1}
-          align="center"
-          content={
-            gameState === player ? 'Piece to place:' : 'Piece will appear here'
-          }
-        />
-        {gameState === player && (
-          <Box width="100%" top={2} height={DIE_HEIGHT} align="center">
-            <Die
-              value={die}
-              color="white"
-              left={`50%-${Math.ceil(DIE_WIDTH / 2)}`}
-              align="center"
-              top={0}
-            />
-          </Box>
-        )}
-      </Box>
+      {gameState !== GAME_STATE_END && (
+        <Box width="100%" top="50%-1">
+          <Box
+            width="100%"
+            top={1}
+            align="center"
+            content={
+              gameState === player
+                ? 'Piece to place:'
+                : 'Piece will appear here'
+            }
+          />
+          {gameState === player && (
+            <Box width="100%" top={2} height={DIE_HEIGHT} align="center">
+              <Die
+                value={die}
+                color="white"
+                left={`50%-${Math.ceil(DIE_WIDTH / 2)}`}
+                align="center"
+                top={0}
+              />
+            </Box>
+          )}
+        </Box>
+      )}
+      {showResult && (
+        <Box width="100%" top="50%-1">
+          <Box width="100%" top={1} align="center" content={resultText} />
+        </Box>
+      )}
     </Box>
   );
 };
