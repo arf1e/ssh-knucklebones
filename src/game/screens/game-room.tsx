@@ -10,24 +10,21 @@ import {
   PLAYER_TWO,
   PlayerIdentifier,
 } from '../engine';
-import {
-  JoinGameRoom,
-  joinGameRoom,
-  TEST_GAME_ROOM_NAME,
-} from '../engine/room-manager';
+import { joinGameRoom } from '../engine/room-manager';
 import { PlayerStatus } from '../../components/PlayerStatus';
 import chalk from 'chalk';
 import { Txt } from '../../components/Txt';
 import { useNavigation } from '../../hooks/useNavigation';
 
-const CURRENT_PLAYER_TURN = 'your turn!';
-const OPPONENT_TURN = "opponent's turn";
-const GAME_OVER = 'game over';
+const CURRENT_PLAYER_TURN = chalk.bgRedBright(chalk.bold('your turn!'));
+const OPPONENT_TURN = chalk.inverse("opponent's turn");
+const GAME_OVER = chalk.bgBlueBright(chalk.bold('game over'));
 
 const Field: React.FC<{
   game: Knucklebones;
   frame: number;
   player: PlayerIdentifier;
+  roomName?: string;
   hoveredP1Column: number | null;
   hoveredP2Column: number | null;
 }> = ({ game, player }) => {
@@ -84,6 +81,7 @@ const Field: React.FC<{
           height={1}
           left={`50%-${Math.floor(readableState.length / 2)}`}
           width={readableState.length}
+          align="center"
           content={readableState}
         />
       )}
@@ -162,9 +160,25 @@ export const GameRoom: React.FC = () => {
   return (
     <Box>
       <Box top={0} left={undefined} right={0} width="100%" height={1}>
-        <Txt top={0} width="100%" align="center">
+        <Txt top={0} width="80%" align="center">
           {helperText}
         </Txt>
+
+        <Box
+          top={0}
+          right={0}
+          width="20%"
+          height={1}
+          align="center"
+          content={
+            params.roomName
+              ? chalk.white(
+                  chalk.bold('room number:'),
+                  chalk.inverse(` ${params.roomName as string} `)
+                )
+              : ''
+          }
+        />
       </Box>
       <Box top={1} left={0} width="100%" height={1} ch="–" />
       <Box top={2}>

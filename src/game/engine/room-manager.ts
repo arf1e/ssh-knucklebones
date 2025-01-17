@@ -86,4 +86,12 @@ export const joinGameRoom = (
   };
 };
 
+export const leaveGameRoom = (roomName: string) => {
+  rooms[roomName].playersCount--;
+
+  if (rooms[roomName].playersCount === 0) {
+    delete rooms[roomName];
+  }
+};
+
 export type JoinGameRoom = typeof joinGameRoom;
