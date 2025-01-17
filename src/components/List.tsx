@@ -5,7 +5,7 @@ import { Widgets } from 'blessed';
 import get from 'lodash/get';
 import { useNavigation } from '../hooks/useNavigation';
 
-type ListOption = {
+export type ListOption = {
   label: string;
   onSelect?: () => void;
 };
@@ -31,23 +31,23 @@ export const List: React.FC<ListProps> = ({
     option.onSelect?.();
   };
 
+  const onSelect = (payload: unknown & { content: string }) => {
+    const label = get(payload, 'content');
+    handleSelection(label);
+  };
+
   return (
-    <list
+    <blessed-list
       vi
       keys
       bg="black"
-      // @ts-ignore
+      // @ts-expect-error blessed typings are wrong
       focused={focused}
       interactive={focused}
       items={options.map(({ label }) => label)}
-      // @ts-ignore
-      onSelect={(payload: unknown & { content: string }) => {
-        const label = get(payload, 'content');
-        handleSelection(label);
-      }}
-      //@ts-ignore
+      onSelect={onSelect}
       keyable
-      onKeypress={(ch, key) => {
+      onKeyPress={(_ch: string, key: { full: string }) => {
         if (key.full === 'escape') {
           goBack();
         }

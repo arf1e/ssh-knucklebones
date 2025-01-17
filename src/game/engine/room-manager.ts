@@ -1,4 +1,10 @@
-import { Knucklebones, PLAYER_ONE, PLAYER_TWO, PlayerIdentifier } from '.';
+import {
+  GAME_STATE_END,
+  Knucklebones,
+  PLAYER_ONE,
+  PLAYER_TWO,
+  PlayerIdentifier,
+} from '.';
 
 export const rooms: Record<
   string,
@@ -7,13 +13,16 @@ export const rooms: Record<
 
 export const TEST_GAME_ROOM_NAME = 'room-1';
 
+export const CREATE_GAME_ROOM = 'create-room';
+export const JOIN_GAME_ROOM = 'join-room';
+
 export const createGameRoom = (): {
   roomName: string;
   game: Knucklebones;
   player: PlayerIdentifier;
 } => {
   const number = Math.floor(Math.random() * 100);
-  const roomName = `room-1`;
+  const roomName = number.toString();
 
   if (rooms[roomName]) {
     return createGameRoom();
@@ -31,11 +40,39 @@ export const createGameRoom = (): {
 
 export type CreateGameRoom = typeof createGameRoom;
 
+const checkIfRoomIsAvailable = (roomName: string) => {
+  const room = rooms[roomName];
+
+  if (!room) return false;
+
+  if (room.playersCount === 2) return false;
+
+  if (room.game.state === GAME_STATE_END) return false;
+
+  return true;
+};
+
 export const joinGameRoom = (
-  roomName: string
-): { game: Knucklebones; player: PlayerIdentifier } => {
+  roomName: string,
+  onError?: (error: string) => void,
+  createIfDoesNotExist?: boolean
+):
+  | { game: Knucklebones; player: PlayerIdentifier; roomName: string }
+  | undefined => {
   if (!rooms[roomName]) {
-    return createGameRoom();
+    if (createIfDoesNotExist) {
+      return createGameRoom();
+    }
+
+    onError?.('room does not exist');
+    return;
+  }
+
+  const isRoomAvailable = checkIfRoomIsAvailable(roomName);
+
+  if (!isRoomAvailable) {
+    onError?.('room is full');
+    return;
   }
 
   const { game, playersCount } = rooms[roomName];
@@ -45,6 +82,7 @@ export const joinGameRoom = (
   return {
     game,
     player: playersCount === 1 ? PLAYER_ONE : PLAYER_TWO,
+    roomName,
   };
 };
 

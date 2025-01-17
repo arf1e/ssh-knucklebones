@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
-type AnimatableSymbol = 'line' | 'dot';
+type AnimatableSymbol = 'line' | 'dot' | 'block';
 
 const framesMapper: Record<AnimatableSymbol, string[]> = {
   line: ['-', '\\', '|', '/'],
   dot: ['·', '•', '●', '•'],
+  block: ['▓', ' '],
 };
 
 export const useAnimatedSymbol = (

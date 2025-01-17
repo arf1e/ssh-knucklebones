@@ -3,7 +3,6 @@ import {
   GameState,
   Knucklebones,
   PLAYER_ONE,
-  PLAYER_TWO,
   PlayerIdentifier,
 } from '../game/engine';
 import { Box } from './Box';
@@ -11,7 +10,6 @@ import { DetailedBlessedProps } from 'react-blessed';
 import { Widgets } from 'blessed';
 import chalk from 'chalk';
 import { Die, DIE_HEIGHT, DIE_WIDTH } from './Die';
-import { Txt } from './Txt';
 
 type PlayerStatusProps = {
   player: PlayerIdentifier;
@@ -21,11 +19,6 @@ type PlayerStatusProps = {
   playerName?: string;
   totalScore: number;
 } & DetailedBlessedProps<Widgets.BoxElement>;
-
-const colorWrapper = {
-  [PLAYER_ONE]: chalk.bgRed,
-  [PLAYER_TWO]: chalk.bgBlue,
-};
 
 export const PlayerStatus: React.FC<PlayerStatusProps> = ({
   player,
@@ -54,7 +47,7 @@ export const PlayerStatus: React.FC<PlayerStatusProps> = ({
           content={chalk.bold(
             '~',
             playerName,
-            ...(isCurrentPlayer ? [colorWrapper[player]('(you)')] : []),
+            ...(isCurrentPlayer ? [chalk.bgRed('(you)')] : []),
             '~'
           )}
         />

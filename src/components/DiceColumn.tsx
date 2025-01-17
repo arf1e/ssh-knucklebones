@@ -15,7 +15,7 @@ type DiceColumnProps = {
   column: DiceColumnState;
   reverse?: boolean;
   hover?: boolean;
-  color: 'red' | 'blue' | 'white';
+  color: 'red' | 'white';
   score: number;
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
@@ -45,11 +45,10 @@ const ComboAwareDie: React.FC<{
 
 const HoverPointer: React.FC<{
   top: number;
-  color: 'red' | 'blue' | 'white';
+  color: 'red' | 'white';
 }> = ({ top, color }) => {
-  const ch = useAnimatedSymbol('line');
-
   const colorWrapper = useMemo(() => colors[color].text.bg, [color]);
+  const ch = useAnimatedSymbol('line');
 
   return (
     <>
@@ -58,7 +57,11 @@ const HoverPointer: React.FC<{
         height={1}
         left={0}
         width={DIE_WIDTH}
-        content={colorWrapper(' ', chalk.white(ch), ' ')}
+        content={colorWrapper(
+          ' ',
+          color === 'white' ? ch : chalk.white(ch),
+          ' '
+        )}
       />
     </>
   );

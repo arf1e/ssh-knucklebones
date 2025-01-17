@@ -10,7 +10,7 @@ type DiceGridProps = {
   columns: GameBoard;
   controllable?: boolean;
   onSelectColumn?: (columnIndex: number) => void;
-  color?: 'red' | 'blue' | 'white';
+  color?: 'red' | 'white';
   hoveredIndex: number;
   onMovePointer?: (columnIndex: number) => void;
   scores: number[];

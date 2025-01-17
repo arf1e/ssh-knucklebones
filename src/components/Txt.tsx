@@ -9,9 +9,8 @@ type TxtProps = {
   width?: number | string;
   height?: number | string;
   children: string;
-} & BlessedIntrinsicElements['element'];
+} & BlessedIntrinsicElements['textbox'];
 
 export const Txt: React.FC<TxtProps> = ({ children, ...textProps }) => {
-  // @ts-expect-error react-blessed types are wrong
-  return <text {...textProps}>{children}</text>;
+  return <blessed-textbox {...textProps}>{children}</blessed-textbox>;
 };

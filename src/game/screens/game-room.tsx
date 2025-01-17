@@ -18,6 +18,7 @@ import {
 import { PlayerStatus } from '../../components/PlayerStatus';
 import chalk from 'chalk';
 import { Txt } from '../../components/Txt';
+import { useNavigation } from '../../hooks/useNavigation';
 
 const CURRENT_PLAYER_TURN = 'your turn!';
 const OPPONENT_TURN = "opponent's turn";
@@ -59,7 +60,7 @@ const Field: React.FC<{
         />
       </Box>
       <DiceGrid
-        top="15%"
+        top={2}
         left="center"
         controllable={player === PLAYER_ONE}
         color={player === PLAYER_ONE ? 'red' : 'white'}
@@ -90,7 +91,7 @@ const Field: React.FC<{
         <DiceGrid
           top="center"
           left="center"
-          color={player === PLAYER_TWO ? 'blue' : 'white'}
+          color={player === PLAYER_TWO ? 'red' : 'white'}
           columns={grid[PLAYER_TWO]}
           controllable={player === PLAYER_TWO}
           scores={scores[PLAYER_TWO]}
@@ -114,11 +115,8 @@ const Field: React.FC<{
   );
 };
 
-type GameRoomProps = {
-  joinGameRoom: JoinGameRoom;
-};
-
-export const GameRoom: React.FC<GameRoomProps> = () => {
+export const GameRoom: React.FC = () => {
+  const { params } = useNavigation();
   const [frame, setFrame] = useState(0);
   const [game, setGame] = useState<Knucklebones | null>(null);
   const [state, setState] = useState<Knucklebones['state'] | null>(null);
@@ -135,7 +133,11 @@ export const GameRoom: React.FC<GameRoomProps> = () => {
   };
 
   useEffect(() => {
-    const { game, player } = joinGameRoom(TEST_GAME_ROOM_NAME);
+    const joinGameRoomPayload = params as ReturnType<typeof joinGameRoom>;
+    if (!joinGameRoomPayload) return;
+
+    const { game, player } = joinGameRoomPayload;
+
     setPlayer(player);
     game.addListener(syncGameState);
     syncGameState(game);

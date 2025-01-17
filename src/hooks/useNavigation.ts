@@ -5,9 +5,9 @@ export enum NavigationRoutes {
   rules = '/rules',
   ragequit = '/ragequit',
   aiLevel = '/ai-level',
-  createOrJoinRoom = '/create-or-join-room',
-  lobby = '/lobby',
+  roomSettings = '/room-settings',
   gameRoom = '/game-room',
+  joinRoom = '/join-room',
 }
 
 export const NavigationContext = React.createContext<{
