@@ -13,14 +13,25 @@ export type ListOption = {
 type ListProps = {
   focused: boolean;
   options: ListOption[];
+  onEscapePress?: () => void;
 } & Omit<DetailedBlessedProps<Widgets.ListElement>, 'focused'>;
 
 export const List: React.FC<ListProps> = ({
   focused = false,
   options,
+  onEscapePress,
   ...blessedProps
 }) => {
   const { goBack } = useNavigation();
+
+  const handleEscape = () => {
+    if (onEscapePress) {
+      onEscapePress();
+      return;
+    }
+
+    goBack();
+  };
 
   const handleSelection = (label: string) => {
     const option = options.find(
@@ -47,9 +58,9 @@ export const List: React.FC<ListProps> = ({
       items={options.map(({ label }) => label)}
       onSelect={onSelect}
       keyable
-      onKeyPress={(_ch: string, key: { full: string }) => {
+      onKeypress={(_ch: string, key: { full: string }) => {
         if (key.full === 'escape') {
-          goBack();
+          handleEscape();
         }
       }}
       style={{

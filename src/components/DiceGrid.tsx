@@ -14,6 +14,7 @@ type DiceGridProps = {
   hoveredIndex: number;
   onMovePointer?: (columnIndex: number) => void;
   scores: number[];
+  onEscapePress?: () => void;
 } & DetailedBlessedProps<Widgets.BoxElement>;
 
 export const DiceGrid: React.FC<DiceGridProps> = ({
@@ -24,6 +25,7 @@ export const DiceGrid: React.FC<DiceGridProps> = ({
   hoveredIndex,
   onMovePointer,
   scores = [0, 0, 0],
+  onEscapePress,
   ...boxProps
 }) => {
   const handleKeyPress = (ch: string, full: string) => {
@@ -41,6 +43,10 @@ export const DiceGrid: React.FC<DiceGridProps> = ({
         return;
       }
       onMovePointer?.(0);
+    }
+
+    if (full === 'escape') {
+      onEscapePress?.();
     }
 
     if (full === 'return') {

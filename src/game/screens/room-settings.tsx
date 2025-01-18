@@ -97,7 +97,7 @@ export const RoomSettings: React.FC = () => {
 
   return (
     <ListMenu
-      title="room settings"
+      title="play against real human being"
       options={[
         {
           label: 'create room',
