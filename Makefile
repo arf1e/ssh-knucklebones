@@ -5,7 +5,7 @@ run: generate-ssh-keypair
 	docker compose up --build --force-recreate -d
 
 production:
-	cp ~/knucklebones-ssh-keys ./ssh
+	cp ~/knucklebones-ssh-keys -r ./ssh
 	docker compose up --build --force-recreate -d
 
 test:
