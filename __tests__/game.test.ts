@@ -177,4 +177,49 @@ describe('score updates', () => {
   });
 });
 
-describe('evicting matching opponent dice', () => {});
+describe('evicting matching opponent dice', () => {
+  test('putting a piece should evict matching opponent pieces in the same column', () => {
+    const game = new Knucklebones();
+    game.grid = {
+      [PLAYER_ONE]: [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null],
+      ],
+      [PLAYER_TWO]: [
+        [1, 1, 2],
+        [null, null, null],
+        [null, null, null],
+      ],
+    };
+    game._updateScores();
+    game.die = 1;
+
+    expect(game.scores[PLAYER_TWO]).toEqual([6, 0, 0]);
+
+    game.makeMove(PLAYER_ONE, 0);
+
+    expect(game.scores[PLAYER_TWO]).toEqual([2, 0, 0]);
+    expect(game.grid[PLAYER_TWO][0]).toEqual([null, null, 2]);
+  });
+
+  test('non-null pieces should be pushed to the right after eviction', () => {
+    const game = new Knucklebones();
+    game.grid = {
+      [PLAYER_ONE]: [
+        [null, null, null],
+        [null, null, null],
+        [3, 3, 3],
+      ],
+      [PLAYER_TWO]: [
+        [1, 1, 2],
+        [null, null, null],
+        [null, null, null],
+      ],
+    };
+    game.die = 2;
+    game.makeMove(PLAYER_ONE, 0);
+
+    expect(game.grid[PLAYER_TWO][0]).toEqual([null, 1, 1]);
+  });
+});
