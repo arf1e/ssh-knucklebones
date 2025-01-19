@@ -1,6 +1,8 @@
 import { Knucklebones } from '..';
 import { getAvailableColumnIndices } from './utils';
 
+export const RANDOM_BOI_AI_NAME = 'random-boi';
+
 /**
  * Random Boi picks a random available column and puts his piece there.
  */

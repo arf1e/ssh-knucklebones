@@ -1,7 +1,8 @@
 import findLastIndex from 'lodash/findLastIndex';
 import { calculateColumnScore } from './score-counter';
 import sum from 'lodash/sum';
-import { generateRandomBoiMove } from './ai/random-boi';
+import { generateRandomBoiMove, RANDOM_BOI_AI_NAME } from './ai/random-boi';
+import { generateHaterMove, HATER_AI_NAME } from './ai/hater';
 
 export const COLUMN_SIZE = 3;
 
@@ -20,7 +21,7 @@ export type PlayerIdentifier = typeof PLAYER_ONE | typeof PLAYER_TWO;
 
 export type Listener = (gameState: Knucklebones) => void;
 
-export type AiPlayer = 'random-boi' | null;
+export type AiPlayer = typeof RANDOM_BOI_AI_NAME | typeof HATER_AI_NAME | null;
 
 export type Scores = {
   [PLAYER_ONE]: [number, number, number];
@@ -127,6 +128,12 @@ export class Knucklebones {
     indicesToEvict.forEach((index) => {
       matchingOpponentColumn[index] = null;
     });
+
+    matchingOpponentColumn.sort((a, b) => {
+      if (a === null && b !== null) return -1;
+      if (a !== null && b === null) return 1;
+      return 0;
+    });
   }
 
   _rollDie() {
@@ -208,10 +215,10 @@ export class Knucklebones {
   _getAiMove = () => {
     if (!this.ai) return;
 
-    if (this.ai === 'random-boi') {
-      const randomBoiMove = generateRandomBoiMove(this);
-      return randomBoiMove;
-    }
+    return {
+      [RANDOM_BOI_AI_NAME]: generateRandomBoiMove,
+      [HATER_AI_NAME]: generateHaterMove,
+    }[this.ai](this);
   };
 
   makeMove = (player: PlayerIdentifier, columnIndex: number) => {

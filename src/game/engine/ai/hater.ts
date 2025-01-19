@@ -1,9 +1,12 @@
 import sortBy from 'lodash/sortBy';
 import { Knucklebones, PLAYER_ONE } from '..';
 import { getAvailableColumnIndices } from './utils';
+import { generateRandomBoiMove } from './random-boi';
+
+export const HATER_AI_NAME = 'the-hater';
 
 /**
- * The Hater attempts to make a move that will cause the opponent to lose the biggest amount of points.
+ * The Hater attempts to make a move that will cause the opponent to lose the biggest amount of points. Fallbacks to random boi if the opponent has no matching dice.
  */
 export const generateHaterMove = (game: Knucklebones): number => {
   const availableColumnIndices = getAvailableColumnIndices(game);
@@ -15,6 +18,14 @@ export const generateHaterMove = (game: Knucklebones): number => {
       columnIndex,
     })
   );
+
+  const opponentHasMatchingDice = accordingOpponentColumns.some((column) =>
+    column.dice.includes(die)
+  );
+
+  if (!opponentHasMatchingDice) {
+    return generateRandomBoiMove(game);
+  }
 
   const sortedAccordingOpponentColumns = sortBy(
     accordingOpponentColumns,
@@ -28,7 +39,8 @@ export const generateHaterMove = (game: Knucklebones): number => {
       }, 0)
   );
 
-  const columnIndex = sortedAccordingOpponentColumns[0].columnIndex;
+  const { columnIndex } =
+    sortedAccordingOpponentColumns[sortedAccordingOpponentColumns.length - 1];
 
   return columnIndex;
 };
