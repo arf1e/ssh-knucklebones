@@ -91,13 +91,13 @@ export const RoomSettings: React.FC = () => {
     }
 
     const { game, player, roomName } = createGameRoomPayload;
-    console.log(game, player, roomName);
     navigate(NavigationRoutes.gameRoom, { game, player, roomName });
   };
 
   return (
     <ListMenu
       title="play against real human being"
+      appendGoBackItem
       options={[
         {
           label: 'create room',

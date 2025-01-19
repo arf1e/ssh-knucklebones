@@ -1,12 +1,10 @@
+import React from 'react';
 import chalk from 'chalk';
-import { useNavigation } from '../../hooks/useNavigation';
 import { Txt } from '../../components/Txt';
 import { List } from '../../components/List';
 import { Box } from '../../components/Box';
 
 export const Rules = () => {
-  const { goBack } = useNavigation();
-
   return (
     <Box>
       <Box width={70}>
@@ -19,9 +17,9 @@ export const Rules = () => {
         <Txt top={6}>{chalk.bold('2. making moves the smart way')}</Txt>
         <Txt top={7}>
           if your column already has a piece of the same value, the values
-          multiply and the total gets added to your score. if your opponent's
-          column has a piece of the same value, their piece(s) are removed from
-          the column.
+          multiply and the total gets added to your score. if your
+          opponent\&aposs column has a piece of the same value, their piece(s)
+          are removed from the column.
         </Txt>
         <Txt top={12}>{chalk.bold('3. winning and losing')}</Txt>
         <Txt top={13}>
@@ -29,16 +27,7 @@ export const Rules = () => {
           columns. player with the highest score wins.
         </Txt>
       </Box>
-      <List
-        top="99%"
-        focused={true}
-        options={[
-          {
-            label: 'go back <enter or esc>',
-            onSelect: () => goBack(),
-          },
-        ]}
-      />
+      <List top="99%" appendGoBackItem focused={true} options={[]} />
     </Box>
   );
 };

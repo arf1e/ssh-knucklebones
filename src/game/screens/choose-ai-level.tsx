@@ -1,11 +1,13 @@
+import React from 'react';
 import chalk from 'chalk';
 import { Txt } from '../../components/Txt';
 import { List } from '../../components/List';
-import { useNavigation } from '../../hooks/useNavigation';
+import { NavigationRoutes, useNavigation } from '../../hooks/useNavigation';
 import { Box } from '../../components/Box';
+import { Knucklebones } from '../engine';
 
 export const ChooseAILevel = () => {
-  const { goBack, navigate } = useNavigation();
+  const { navigate } = useNavigation();
 
   return (
     <Box>
@@ -13,22 +15,16 @@ export const ChooseAILevel = () => {
       <List
         top={2}
         focused={true}
+        appendGoBackItem
         options={[
           {
-            label: 'easy',
-            onSelect: () => {},
-          },
-          {
-            label: 'medium',
-            onSelect: () => {},
-          },
-          {
-            label: 'hard',
-            onSelect: () => {},
-          },
-          {
-            label: 'go back <esc>',
-            onSelect: goBack,
+            label: 'random boi',
+            onSelect: () =>
+              navigate(NavigationRoutes.gameRoom, {
+                game: new Knucklebones('random-boi'),
+                player: 'p1',
+                roomName: 'random-boi AI',
+              }),
           },
         ]}
       />

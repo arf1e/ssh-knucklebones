@@ -11,11 +11,11 @@ import {
   PLAYER_TWO,
   PlayerIdentifier,
 } from '../engine';
-import { JoinGameRoom } from '../engine/room-manager';
+import { JoinGameRoom, leaveGameRoom } from '../engine/room-manager';
 import { PlayerStatus } from '../../components/PlayerStatus';
 import chalk from 'chalk';
 import { Txt } from '../../components/Txt';
-import { NavigationRoutes, useNavigation } from '../../hooks/useNavigation';
+import { useNavigation } from '../../hooks/useNavigation';
 import { RagequitOverlay } from '../../components/RagequitOverlay';
 
 const CURRENT_PLAYER_TURN = chalk.bgRedBright(chalk.bold('your turn!'));
@@ -121,7 +121,7 @@ const Field: React.FC<{
 };
 
 export const GameRoom: React.FC = () => {
-  const { params, goBack, navigate } = useNavigation();
+  const { params, goBack } = useNavigation();
 
   const [frame, setFrame] = useState(0);
   const [game, setGame] = useState<Knucklebones | null>(null);
@@ -172,7 +172,7 @@ export const GameRoom: React.FC = () => {
 
   const onEscapePress = () => {
     if (state === GAME_STATE_END) {
-      navigate(NavigationRoutes.mainMenu);
+      goBack();
       return;
     }
 
@@ -197,9 +197,9 @@ export const GameRoom: React.FC = () => {
               content={
                 params.roomName
                   ? chalk.white(
-                    chalk.bold('room number:'),
-                    chalk.inverse(` ${params.roomName as string} `)
-                  )
+                      chalk.bold('room:'),
+                      chalk.inverse(` ${params.roomName as string} `)
+                    )
                   : ''
               }
             />
@@ -224,6 +224,7 @@ export const GameRoom: React.FC = () => {
         onHide={() => setIsRagequitOverlayVisible(false)}
         onQuit={() => {
           setIsRagequitOverlayVisible(false);
+          leaveGameRoom(params.roomName as string);
           goBack();
         }}
       />

@@ -1,9 +1,11 @@
+import React from 'react';
 import blessed from 'blessed';
 import { render } from 'react-blessed';
 import { NavigationProvider } from '../components/NavigationProvider';
 import { Router } from './navigation/router';
 import { Box } from '../components/Box';
 import { CreateGameRoom, JoinGameRoom } from './engine/room-manager';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 
 type AppProps = {
   onQuit: () => void;
@@ -38,11 +40,13 @@ export const renderBlessedApp = (
   { onQuit, createGameRoom, joinGameRoom }: renderBlessedAppFunctions
 ) => {
   render(
-    <App
-      onQuit={onQuit}
-      createGameRoom={createGameRoom}
-      joinGameRoom={joinGameRoom}
-    />,
+    <ErrorBoundary>
+      <App
+        onQuit={onQuit}
+        createGameRoom={createGameRoom}
+        joinGameRoom={joinGameRoom}
+      />
+    </ErrorBoundary>,
     screen
   );
 };

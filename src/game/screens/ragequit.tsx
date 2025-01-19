@@ -20,12 +20,12 @@ export const RageQuit: React.FC<RageQuitProps> = ({ onQuit }) => {
         focused={true}
         options={[
           {
-            label: 'yeahhh',
-            onSelect: onQuit,
-          },
-          {
             label: 'no <esc>',
             onSelect: goBack,
+          },
+          {
+            label: 'yeah',
+            onSelect: onQuit,
           },
         ]}
       />
