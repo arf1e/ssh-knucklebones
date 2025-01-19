@@ -5,8 +5,9 @@ run: generate-ssh-keypair
 	docker compose up --build --force-recreate -d
 
 production:
+	docker compose down
 	cp ~/knucklebones-ssh-keys -r ./ssh
-	docker compose up --build --force-recreate -d
+	docker compose up --build -d
 
 test:
 	npm run test
