@@ -1,0 +1,15 @@
+services:
+  server:
+    build:
+      context: .
+    environment:
+      NODE_ENV: production
+      FORCE_COLOR: 1 # Otherwise chalk acts weird
+      # To get support for unicode characters in terminal
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      LANGUAGE: en_US.UTF-8
+      SERVER_PORT: 2222
+      SERVER_HOST: 0.0.0.0
+    ports:
+      - 2222:2222

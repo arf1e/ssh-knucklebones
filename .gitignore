@@ -3,4 +3,4 @@ dist
 db
 ssh/*
 ssh/.gitkeep
-
+.env
