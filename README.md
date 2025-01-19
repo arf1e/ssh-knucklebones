@@ -1,6 +1,6 @@
 # ssh knucklebones
 
-[![tests](https://github.com/arf1e/ssh-knucklebones/actions/workflows/node.js.yml/badge.svg)](https://github.com/arf1e/ssh-knucklebones/actions/workflows/node.js.yml)
+[![tests](https://github.com/arf1e/ssh-knucklebones/actions/workflows/node.js.yml/badge.svg)](https://github.com/arf1e/ssh-knucklebones/actions/workflows/node.js.yml) [![deploy](https://github.com/arf1e/ssh-knucklebones/actions/workflows/deploy.yml/badge.svg)](https://github.com/arf1e/ssh-knucklebones/actions/workflows/deploy.yml)
 
 ## Original game idea
 
