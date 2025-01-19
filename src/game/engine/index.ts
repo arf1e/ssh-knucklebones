@@ -1,6 +1,7 @@
 import findLastIndex from 'lodash/findLastIndex';
 import { calculateColumnScore } from './score-counter';
 import sum from 'lodash/sum';
+import { generateRandomBoiMove } from './ai/random-boi';
 
 export const COLUMN_SIZE = 3;
 
@@ -18,6 +19,8 @@ export const PLAYER_TWO = 'p2';
 export type PlayerIdentifier = typeof PLAYER_ONE | typeof PLAYER_TWO;
 
 export type Listener = (gameState: Knucklebones) => void;
+
+export type AiPlayer = 'random-boi' | null;
 
 export type Scores = {
   [PLAYER_ONE]: [number, number, number];
@@ -65,8 +68,12 @@ const composeInitialScores = (): {
   [PLAYER_TWO]: [0, 0, 0],
 });
 
+const initialHoveredColumns = {
+  [PLAYER_ONE]: 0,
+  [PLAYER_TWO]: 0,
+};
+
 export class Knucklebones {
-  isServerSide: boolean;
   turn: number = 0;
   state: GameState = GAME_STATE_P1_TURN;
   die: number = rollDie();
@@ -74,19 +81,15 @@ export class Knucklebones {
   grid: GameGrid = composeInitialGrid();
   listeners: Listener[] = [];
   winner: PlayerIdentifier | null = null;
+  ai: AiPlayer;
+  aiMoveDelayMs: number = 3_000;
   hoveredColumns: {
     [PLAYER_ONE]: number;
     [PLAYER_TWO]: number;
-  } = {
-    [PLAYER_ONE]: 0,
-    [PLAYER_TWO]: 0,
-  };
+  } = initialHoveredColumns;
 
-  constructor(params?: { dieValue?: number; isServerSide?: boolean }) {
-    if (params?.dieValue) {
-      this.die = params.dieValue;
-    }
-    this.isServerSide = params?.isServerSide ?? false;
+  constructor(ai: AiPlayer = null) {
+    this.ai = ai;
   }
 
   addListener(listener: Listener) {
@@ -189,7 +192,27 @@ export class Knucklebones {
     const newState = this.state === PLAYER_ONE ? PLAYER_TWO : PLAYER_ONE;
     this.state = newState;
     this.notifyListeners();
+
+    if (this.ai && newState === PLAYER_TWO) {
+      const aiMove = this._getAiMove();
+      if (typeof aiMove !== 'number') return this;
+
+      setTimeout(() => {
+        this.focusColumn('p2', aiMove);
+        this.notifyListeners();
+        this.makeMove('p2', aiMove);
+      }, this.aiMoveDelayMs);
+    }
   }
+
+  _getAiMove = () => {
+    if (!this.ai) return;
+
+    if (this.ai === 'random-boi') {
+      const randomBoiMove = generateRandomBoiMove(this);
+      return randomBoiMove;
+    }
+  };
 
   makeMove = (player: PlayerIdentifier, columnIndex: number) => {
     if (this.state !== player) {

@@ -11,8 +11,6 @@ export const rooms: Record<
   { game: Knucklebones; playersCount: number }
 > = {};
 
-export const TEST_GAME_ROOM_NAME = 'room-1';
-
 export const CREATE_GAME_ROOM = 'create-room';
 export const JOIN_GAME_ROOM = 'join-room';
 
@@ -28,7 +26,7 @@ export const createGameRoom = (): {
     return createGameRoom();
   }
 
-  const game = new Knucklebones({ isServerSide: true });
+  const game = new Knucklebones();
   rooms[roomName] = { game, playersCount: 0 };
 
   return {
@@ -87,6 +85,7 @@ export const joinGameRoom = (
 };
 
 export const leaveGameRoom = (roomName: string) => {
+  if (!rooms[roomName]) return;
   rooms[roomName].playersCount--;
 
   if (rooms[roomName].playersCount === 0) {
