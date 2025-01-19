@@ -4,7 +4,7 @@
 
 ## Original game idea
 
-Originally, Knucklebones is ![a mini-game from Cult of the Lamb by Massive Monster](https://cult-of-the-lamb.fandom.com/wiki/Knucklebones)
+Originally, Knucklebones is [a mini-game from Cult of the Lamb by Massive Monster](https://cult-of-the-lamb.fandom.com/wiki/Knucklebones)
 
 ## Playing the game
 
