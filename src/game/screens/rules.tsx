@@ -16,13 +16,14 @@ export const Rules = () => {
         </Txt>
         <Txt top={6}>{chalk.bold('2. making moves the smart way')}</Txt>
         <Txt top={7}>
-          if your column already has a piece of the same value, the values
-          multiply and the total gets added to your score. if your
-          opponent\&aposs column has a piece of the same value, their piece(s)
-          are removed from the column.
+          if your column already has a piece of the same value, each piece adds
+          its value multiplied by the amount of the same dice in the column to
+          your score. so, two 6 pieces would give you 6*2 + 6*2 = 24 points. if
+          your opponent has pieces of the same value in the same column, their
+          pieces are removed from the column.
         </Txt>
-        <Txt top={12}>{chalk.bold('3. winning and losing')}</Txt>
-        <Txt top={13}>
+        <Txt top={13}>{chalk.bold('3. winning and losing')}</Txt>
+        <Txt top={14}>
           game session ends when one of the players has filled all their
           columns. player with the highest score wins.
         </Txt>
