@@ -40,8 +40,8 @@ export const RagequitOverlay: React.FC<RagequitOverlayProps> = ({
         focused={true}
         onEscapePress={onHide}
         options={[
-          { label: 'yes', onSelect: onQuit },
           { label: 'no <esc>', onSelect: onHide },
+          { label: 'yes', onSelect: onQuit },
         ]}
       />
     </Box>

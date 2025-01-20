@@ -220,7 +220,7 @@ export const GameRoom: React.FC = () => {
       )}
       <RagequitOverlay
         isVisible={isRagequitOverlayVisible}
-        description="the game is not over yet"
+        description="are you sure? the game is not over yet"
         onHide={() => setIsRagequitOverlayVisible(false)}
         onQuit={() => {
           setIsRagequitOverlayVisible(false);
