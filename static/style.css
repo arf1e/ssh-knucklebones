@@ -1,0 +1,121 @@
+@keyframes rainbowBorder {
+  0% {
+    border: 1px solid red;
+  }
+
+  25% {
+    border: 1px solid magenta;
+  }
+
+  50% {
+    border: 1px solid blue;
+  }
+
+  75% {
+    border: 1px solid cyan;
+  }
+
+  100% {
+    border: 1px solid yellow;
+  }
+}
+
+html {
+  background: black;
+  color: white;
+  font-family: 'Karla', sans-serif;
+  font-size: 16px;
+}
+
+.heading {
+  background-color: white;
+  font-size: 16px;
+  color: black;
+  display: inline-block;
+  font-weight: normal;
+  padding: 0 2px;
+}
+
+.heading--h1 {
+  font-size: 32px;
+  align-self: center;
+  margin: 0 auto;
+}
+
+.heading--list-item {
+  color: white;
+  font-weight: 800;
+  background-color: black;
+  margin-bottom: 4px;
+}
+
+.container {
+  max-width: 768px;
+  padding: 0 12px;
+  margin: 0 auto;
+}
+
+p {
+  line-height: 1.5;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list__item-text {
+  margin: 0;
+}
+
+.link {
+  color: white;
+  background-color: red;
+}
+
+.link--footer {
+  background-color: pink;
+  color: black;
+  padding: 0px 8px;
+}
+
+.page-footer {
+  border-top: 1px solid white;
+}
+
+.page-header {
+  border-bottom: 1px solid white;
+  padding: 24px 0;
+}
+
+main {
+  margin: 64px 0;
+}
+
+.page-header__command {
+  display: inline-flex;
+  align-self: center;
+  cursor: pointer;
+  padding: 12px 24px;
+  border: 1px solid white;
+  transition: all 0.2s;
+  animation: rainbowBorder 4s infinite;
+}
+
+.page-header__command-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.page-header__command--copied {
+  border: 1px solid green;
+  background-color: green;
+  animation: none;
+}

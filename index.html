@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>knucklebones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="static/style.css" />
+    <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <div class="container">
+          <h1 class="page-header__title heading heading--h1">knucklebones</h1>
+          <p class="page-header__description">
+            a bootleg copy of an awesome mini-game from
+            <a href="https://www.cultofthelamb.com" class="link"
+              >Cult of the Lamb by Massive Monster</a
+            >
+            that works over ssh.
+          </p>
+
+          <div class="page-header__command-container">
+            <div class="page-header__command">
+              ssh knucklebones.egorushque.com
+            </div>
+          </div>
+        </div>
+      </header>
+      <section class="page-section container">
+        <h2 class="heading heading--h2">rules</h2>
+        <ul class="list list--rules">
+          <li class="list__item">
+            <strong class="heading heading--list-item">1. making moves</strong>
+            <p class="list__item-text">
+              in knucklebones, players take turns rolling dice and placing it in
+              either one of three columns on their field.
+            </p>
+          </li>
+          <li class="list__item">
+            <strong class="heading heading--list-item"
+              >2. making moves the smart way</strong
+            >
+            <p class="list__item-text">
+              if your column already has a piece of the same value, each piece
+              adds its value multiplied by the amount of the same dice in the
+              column to your score. so, two 6 pieces would give you 6*2 + 6*2 =
+              24 points. if your opponent has pieces of the same value in the
+              same column, their pieces are removed from the column.
+            </p>
+          </li>
+          <li class="list__item">
+            <strong class="heading heading--list-item"
+              >3. winning and losing</strong
+            >
+            <p class="list__item-text">
+              game session ends when one of the players has filled all their
+              columns. player with the highest score wins.
+            </p>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="page-footer">
+      <div class="container">
+        <p class="page-footer__text">
+          also visit my
+          <a href="https://egorushque.com" class="link link--footer"
+            >pink website</a
+          >
+        </p>
+      </div>
+    </footer>
+    <script src="static/script.js"></script>
+  </body>
+</html>
