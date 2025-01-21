@@ -55,8 +55,10 @@ game session ends when one of the players has filled all their columns. player w
 
 ## Running the thing locally
 
-Besides installing project dependencies with `npm install`, you'll have to generate a keypair for the SSH server with `make generate-ssh-keypair`.
-Then the app can be started with `npm run dev`.
+1. Install project dependencies with `npm install`;
+2. Generate a keypair for the SSH server with `make generate-ssh-keypair`;
+3. Start the app in dev mode with `npm run dev`.
+
 These commands will start the SSH server and serve the app over it. By default, the SSH server runs on port `2222`.
 You can change the port by setting the `SERVER_PORT` environment variable in your `.env` file.
 
