@@ -47,7 +47,7 @@ if your column already has a piece of the same value, each piece adds its value 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/1b16b2a6-e14f-43b4-9785-fe973a411f7e" alt="evicting-dice" />
 </p>
-if your column already has a piece of the same value, each piece adds its value multiplied by the amount of the same dice in the column to your score. so, `two 6 pieces would give you 6*2 + 6*2 = 24 points`.
+if your opponent has pieces of the same value in the same column, their pieces are removed from the column.
 
 ### 3. winning and losing
 
