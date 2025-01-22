@@ -14,7 +14,7 @@
   - [1. makin moves](#1-makin-moves)
   - [2. makin moves the smart way](#2-makin-moves-the-smart-way)
     - [2.1. combos](#21-combos)
-    - [2.1. evicting opponent's dice](#21-evicting-opponents-dice)
+    - [2.2. evicting opponent's dice](#22-evicting-opponents-dice)
   - [3. winning and losing](#3-winning-and-losing)
 
 ## Original game idea
