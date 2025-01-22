@@ -40,7 +40,7 @@ in knucklebones, players take turns rolling dice and placing it in either one of
 <p align="center">
   <img src="https://github.com/user-attachments/assets/4ab45905-4b5e-43d5-b298-4e47f4dc229c" alt="combos" />
 </p>
-if your column already has a piece of the same value, each piece adds its value multiplied by the amount of the same dice in the column to your score. so, `two 6 pieces would give you 6*2 + 6*2 = 24 points`.
+if your column already has a piece of the same value, each piece adds its value multiplied by the amount of the same dice in the column to your score. so, two 6 pieces would give you 6*2 + 6*2 = 24 points.
 
 #### 2.2. evicting opponent's dice
 
