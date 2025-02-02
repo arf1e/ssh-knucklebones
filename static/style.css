@@ -1,22 +1,50 @@
 @keyframes rainbowBorder {
   0% {
-    border: 1px solid red;
+    border-color: red;
   }
 
   25% {
-    border: 1px solid magenta;
+    border-color: magenta;
   }
 
   50% {
-    border: 1px solid blue;
+    border-color: blue;
   }
 
   75% {
-    border: 1px solid cyan;
+    border-color: cyan;
   }
 
   100% {
-    border: 1px solid yellow;
+    border-color: red;
+  }
+}
+
+@keyframes pointer--left {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-5px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes pointer--right {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }
 
@@ -25,11 +53,20 @@ html {
   color: white;
   font-family: 'Karla', sans-serif;
   font-size: 16px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+main {
+  margin: 64px 0;
 }
 
 .heading {
   background-color: white;
-  font-size: 16px;
+  font-size: 20px;
   color: black;
   display: inline-block;
   font-weight: normal;
@@ -38,13 +75,14 @@ html {
 
 .heading--h1 {
   font-size: 32px;
-  align-self: center;
-  margin: 0 auto;
+  margin: 12px auto;
+  padding: 0;
 }
 
 .heading--list-item {
   color: white;
   font-weight: 800;
+  font-size: 16px;
   background-color: black;
   margin-bottom: 4px;
 }
@@ -60,6 +98,7 @@ p {
 }
 
 .list {
+  margin: 0;
   list-style: none;
   padding: 0;
   display: flex;
@@ -77,32 +116,34 @@ p {
 }
 
 .link--footer {
-  background-color: pink;
-  color: black;
-  padding: 0px 8px;
+  color: pink;
+  background-color: black;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.2s;
 }
 
-.page-footer {
-  border-top: 1px solid white;
+.link--footer:hover {
+  color: black;
+  background-color: pink;
 }
 
 .page-header {
-  border-bottom: 1px solid white;
-  padding: 24px 0;
-}
-
-main {
-  margin: 64px 0;
+  padding: 48px 0;
 }
 
 .page-header__command {
+  background: none;
+  color: white;
   display: inline-flex;
   align-self: center;
   cursor: pointer;
   padding: 12px 24px;
-  border: 1px solid white;
+  border: 4px solid;
   transition: all 0.2s;
-  animation: rainbowBorder 4s infinite;
+  animation: rainbowBorder 4s infinite ease-in-out;
+  font-size: 16px;
+  letter-spacing: 1px;
 }
 
 .page-header__command-container {
@@ -112,10 +153,77 @@ main {
   margin-top: 24px;
   margin-bottom: 24px;
   position: relative;
+  font-weight: bold;
 }
 
 .page-header__command--copied {
-  border: 1px solid green;
+  border: 4px solid green;
   background-color: green;
   animation: none;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-image: linear-gradient(to right, white 70%, black 30%);
+  background-position: bottom;
+  background-size: 12px 8px;
+  background-repeat: repeat-x;
+  margin: 24px 0;
+}
+
+.page-header__command-decoration {
+  align-self: center;
+  font-size: 20px;
+  font-weight: normal;
+  margin: 8px;
+}
+
+.page-header__command-decoration--pre {
+  animation: pointer--left 1s infinite linear;
+}
+
+.page-header__command-decoration--post {
+  animation: pointer--right 1s infinite linear;
+}
+
+.gif-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  height: 350px;
+}
+
+.gif-container--hero {
+  height: 500px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+em {
+  color: black;
+  font-style: normal;
+  background-color: white;
+}
+
+@media (max-width: 768px) {
+  .page-header__command-decoration {
+    display: none;
+  }
+
+  .gif-container,
+  .gif-container--hero {
+    height: auto;
+    width: auto;
+    min-width: auto;
+    min-height: auto;
+  }
+
+  .gif {
+    max-width: 80vw;
+  }
+}
+
+.page-footer {
+  margin-bottom: 48px;
 }

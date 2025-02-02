@@ -17,7 +17,16 @@
     <main>
       <header class="page-header">
         <div class="container">
-          <h1 class="page-header__title heading heading--h1">knucklebones</h1>
+          <h1 class="page-header__title heading heading--h1">
+            ssh knucklebones
+          </h1>
+          <div class="gif-container gif-container--hero">
+            <img
+              src="https://res.cloudinary.com/dzq4iaveg/image/upload/v1738491157/egorushque.com/ezgif-22cfadde796df_m5txan.gif"
+              alt="game-overview"
+              class="gif"
+            />
+          </div>
           <p class="page-header__description">
             a bootleg copy of an awesome mini-game from
             <a href="https://www.cultofthelamb.com" class="link"
@@ -27,14 +36,25 @@
           </p>
 
           <div class="page-header__command-container">
-            <div class="page-header__command">
+            <span
+              class="page-header__command-decoration page-header__command-decoration--pre"
+            >
+              >>>
+            </span>
+            <button class="page-header__command">
               ssh knucklebones.egorushque.com
-            </div>
+            </button>
+            <span
+              class="page-header__command-decoration page-header__command-decoration--post"
+            >
+              <<<
+            </span>
           </div>
         </div>
       </header>
+      <div class="divider divider--header"></div>
       <section class="page-section container">
-        <h2 class="heading heading--h2">rules</h2>
+        <h2 class="heading heading--h2">rules & game mechanics</h2>
         <ul class="list list--rules">
           <li class="list__item">
             <strong class="heading heading--list-item">1. making moves</strong>
@@ -48,12 +68,45 @@
               >2. making moves the smart way</strong
             >
             <p class="list__item-text">
+              the key to winning is to make combos and eliminate your opponent's
+              dice.
+            </p>
+          </li>
+          <li class="list__item">
+            <strong class="heading heading--list-item">2.1. combos</strong>
+            <br />
+            <div class="gif-container">
+              <img
+                src="https://github.com/user-attachments/assets/4ab45905-4b5e-43d5-b298-4e47f4dc229c"
+                alt="combos"
+                class="gif"
+              />
+            </div>
+            <p class="list__item-text">
               if your column already has a piece of the same value, each piece
               adds its value multiplied by the amount of the same dice in the
-              column to your score. so, two 6 pieces would give you 6*2 + 6*2 =
-              24 points. if your opponent has pieces of the same value in the
-              same column, their pieces are removed from the column.
+              column to your score.
+              <em>so, two 6 pieces would give you 6*2 + 6*2 = 24 points.</em>
             </p>
+          </li>
+          <li class="list__item">
+            <string class="heading heading--list-item"
+              >2.2. evicting your opponent's dice</string
+            >
+            <div class="gif-container">
+              <img
+                src="https://github.com/user-attachments/assets/1b16b2a6-e14f-43b4-9785-fe973a411f7e"
+                alt="elimination"
+                class="gif"
+              />
+            </div>
+
+            <p class="list__item-text">
+              if your opponent has pieces of the same value in the same column,
+              their pieces are removed from the column.
+            </p>
+
+            <br />
           </li>
           <li class="list__item">
             <strong class="heading heading--list-item"
@@ -67,6 +120,7 @@
         </ul>
       </section>
     </main>
+    <div class="divider divider--footer"></div>
     <footer class="page-footer">
       <div class="container">
         <p class="page-footer__text">
